@@ -1,0 +1,87 @@
+# 07
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人主页</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<!-- 粒子特效画布 -->
+<canvas id="particleCanvas"></canvas>
+
+<!-- 背景音乐，你自行修改src音频链接 -->
+<audio id="bgMusic" loop>
+    <source src="./assets/bgm.mp3" type="audio/mpeg">
+
+<button class="audio-btn" id="musicBtn">播放音乐</button>
+
+<div class="page-wrap">
+    <!-- 第一页：头像 +自定义文字 -->
+    <div class="page page1 active">
+        <div class="page-content">
+            <img class="avatar" src="./assets/avatar.jpg" alt="头像">
+            <div class="page1-text">
+                这里写你自定义的开场白文字，可以随便编辑
+            </div>
+            <div class="btn-group">
+                <button class="next-btn" onclick="goPage(1)">进入</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 第二页：个人信息 -->
+    <div class="page page2">
+        <div class="page-content">
+            <div class="info-box">
+                <h3>个人资料</h3>
+                <div>昵称：____</div>
+                <div>简介：在这里填写你的个人介绍</div>
+                <div>爱好：xxx</div>
+                <div>其他备注信息写在这里</div>
+            </div>
+            <div class="btn-group">
+                <button class="prev-btn" onclick="goPage(0)">上一页</button>
+                <button class="next-btn" onclick="goPage(2)">下一页</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 第三页：价位 -->
+    <div class="page page3">
+        <div class="page-content">
+            <div class="price-box">
+                <h3>价位表</h3>
+                <div class="price-item">项目A —— xx元/小时</div>
+                <div class="price-item">项目B —— xx元/小时</div>
+                <div class="price-item">项目C —— xx元/次</div>
+                <div class="price-item">特殊定制 —— 咨询私聊</div>
+            </div>
+            <div class="btn-group">
+                <button class="prev-btn" onclick="goPage(1)">上一页</button>
+                <button class="next-btn" onclick="goPage(3)">下一页</button>
+            </div>
+        </div>
+    </div>
+
+    <!--第四页：4条链接-->
+    <div class="page page4">
+        <div class="page-content">
+            <div class="link-container">
+                <div class="link-card"><a href="https://链接1.com" target="_blank">链接一名称</a></div>
+                <div class="link-card"><a href="https://链接2.com" target="_blank">链接二名称</a></div>
+                <div class="link-card"><a href="https://链接3.com" target="_blank">链接三名称</a></div>
+                <div class="link-card"><a href="https://链接4.com" target="_blank">链接四名称</a></div>
+            </div>
+            <div class="btn-group">
+                <button class="prev-btn" onclick="goPage(2)">上一页</button>
+                <button class="next-btn" onclick="goPage(0)">回到首页</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="./main.js"></script>
+</body>
+</html>
