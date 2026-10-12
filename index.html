@@ -5,122 +5,165 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>我的个人主页</title>
     <style>
-        /* 全局样式 */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            margin: 0;
-            padding: 0;
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            background-color: #f0f2f5; /* 默认背景色 */
-            color: #333;
+            background-color: #8B0000;
+            color: white;
+            overflow: hidden;
+            height: 100vh;
         }
 
-        /* 每一页的通用容器 */
-        .page-section {
-            position: relative; /* 关键：作为定位基准 */
-            height: 100vh;      /* 占满全屏高度 */
-            width: 100%;
-            display: flex;
+        /* 每一页全屏 */
+        .page {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: none;
             justify-content: center;
             align-items: center;
-            overflow: hidden;   /* 防止图片溢出 */
-            border-bottom: 1px solid #ddd; /* 分隔线，方便你看清分页 */
-        }
-
-        /* --- 核心功能：背景图样式 --- */
-        .custom-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* 保证图片铺满且不变形 */
-            z-index: 1;        /* 层级设为1，放在最底层 */
-            filter: brightness(0.6); /* 稍微变暗一点，让文字和头像更清晰 */
-        }
-
-        /* --- 头像容器样式 --- */
-        .content-layer {
-            position: relative;
-            z-index: 2;        /* 层级设为2，浮在背景图上面 */
+            flex-direction: column;
             text-align: center;
-            color: white;      /* 文字设为白色，配合深色背景 */
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5); /* 文字阴影，增加可读性 */
+        }
+        .page.active { display: flex; }
+
+        /* 背景图（第1、3、5页用） */
+        .page-bg {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            filter: brightness(0.55);
         }
 
-        /* 头像样式 */
+        /* 内容层，浮在背景图上 */
+        .page-content {
+            position: relative;
+            z-index: 2;
+            padding: 20px;
+        }
+
+        /* 头像 */
         .avatar {
             width: 120px;
             height: 120px;
-            border-radius: 50%; /* 圆形头像 */
+            border-radius: 50%;
             border: 4px solid white;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            margin-bottom: 24px;
             object-fit: cover;
         }
 
-        h1 { font-size: 2.5rem; margin: 0; }
-        p { font-size: 1.2rem; margin-top: 10px; }
+        h1 { font-size: 2rem; margin-bottom: 12px; }
+        p  { font-size: 1.1rem; opacity: 0.9; }
 
-        /* 普通页面的样式（没有背景图的） */
-        .normal-page {
-            background-color: #ffffff;
+        /* 底部翻页按钮 */
+        .nav-bar {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            display: flex;
+            gap: 12px;
+        }
+        .nav-btn {
+            background: rgba(255,255,255,0.25);
+            color: white;
+            border: 2px solid white;
+            border-radius: 50%;
+            width: 44px; height: 44px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .nav-btn:active {
+            background: rgba(255,255,255,0.5);
         }
     </style>
 </head>
 <body>
 
-    <!-- === 第 1 页 (有背景图) === -->
-    <div class="page-section">
-        <!-- 这里替换你的背景图链接 -->
-        <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=2070&auto=format&fit=crop" class="custom-bg" alt="背景图">
-        
-        <div class="content-layer">
-            <!-- 这里替换你的头像链接 -->
-            <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="avatar" alt="头像">
+    <!-- 第1页（有背景图） -->
+    <div class="page active" data-bg="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=2070&auto=format&fit=crop">
+        <img class="page-bg" src="" alt="背景">
+        <div class="page-content">
+            <img class="avatar" src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="头像">
             <h1>第一页</h1>
-            <p>这里是首页，背景图在头像后面</p>
+            <p>这里是首页</p>
         </div>
     </div>
 
-    <!-- === 第 2 页 (普通页面) === -->
-    <div class="page-section normal-page">
-        <div class="content-layer" style="color: #333; text-shadow: none;">
+    <!-- 第2页（纯暗红背景） -->
+    <div class="page">
+        <div class="page-content">
             <h1>第二页</h1>
-            <p>这是一个普通的页面，没有特殊背景。</p>
+            <p>暗红色主题</p>
         </div>
     </div>
 
-    <!-- === 第 3 页 (有背景图) === -->
-    <div class="page-section">
-        <!-- 这里替换第3页的背景图 -->
-        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=2070&auto=format&fit=crop" class="custom-bg" alt="背景图">
-        
-        <div class="content-layer">
-            <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="avatar" alt="头像">
+    <!-- 第3页（有背景图） -->
+    <div class="page" data-bg="https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=2070&auto=format&fit=crop">
+        <img class="page-bg" src="" alt="背景">
+        <div class="page-content">
+            <img class="avatar" src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="头像">
             <h1>第三页</h1>
-            <p>这是第三页，同样拥有独立背景</p>
+            <p>自定义背景</p>
         </div>
     </div>
 
-    <!-- === 第 4 页 (普通页面) === -->
-    <div class="page-section normal-page">
-        <div class="content-layer" style="color: #333; text-shadow: none;">
+    <!-- 第4页（纯暗红背景） -->
+    <div class="page">
+        <div class="page-content">
             <h1>第四页</h1>
-            <p>这也是一个普通页面。</p>
+            <p>暗红色主题</p>
         </div>
     </div>
 
-    <!-- === 第 5 页 (有背景图) === -->
-    <div class="page-section">
-        <!-- 这里替换第5页的背景图 -->
-        <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=1948&auto=format&fit=crop" class="custom-bg" alt="背景图">
-        
-        <div class="content-layer">
-            <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" class="avatar" alt="头像">
+    <!-- 第5页（有背景图） -->
+    <div class="page" data-bg="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=1948&auto=format&fit=crop">
+        <img class="page-bg" src="" alt="背景">
+        <div class="page-content">
+            <img class="avatar" src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="头像">
             <h1>第五页</h1>
-            <p>最后一页，风景独好</p>
+            <p>最后一页</p>
         </div>
     </div>
+
+    <!-- 底部翻页按钮 -->
+    <div class="nav-bar">
+        <button class="nav-btn" id="prevBtn">◀</button>
+        <button class="nav-btn" id="nextBtn">▶</button>
+    </div>
+
+    <script>
+        const pages = document.querySelectorAll('.page');
+        let current = 0;
+
+        function showPage(index) {
+            pages.forEach(p => p.classList.remove('active'));
+            pages[index].classList.add('active');
+
+            // 有背景图的页，加载图片
+            const bg = pages[index].getAttribute('data-bg');
+            const bgImg = pages[index].querySelector('.page-bg');
+            if (bg && bgImg) bgImg.src = bg;
+        }
+
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            current = (current - 1 + pages.length) % pages.length;
+            showPage(current);
+        });
+
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            current = (current + 1) % pages.length;
+            showPage(current);
+        });
+    </script>
 
 </body>
 </html>
