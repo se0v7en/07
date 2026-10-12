@@ -8,14 +8,12 @@
 </head>
 <body>
 
-<!-- ===== 顶部可编辑文字框（固定） ===== -->
-<div class="top-bar" id="topBar">
-  <div class="text-frame editable" contenteditable="true" data-key="top_text">
-    顶部文字，点击可编辑……
-  </div>
+<!-- ===== 顶部文字（改这里的文字即可） ===== -->
+<div class="top-bar">
+  <div class="text-frame">顶部文字 · 在 index.html 中修改</div>
 </div>
 
-<!-- ===== 中间：600×800 画布（3:4 竖版，浮空） ===== -->
+<!-- ===== 600×800 画布（3:4 竖版，浮空） ===== -->
 <div class="viewport" id="viewport">
   <div class="pages" id="pages">
 
@@ -27,18 +25,25 @@
 
       <div class="abs main-card ink-card">
         <div class="ink-layer"></div>
-        <p class="abs card-text editable" contenteditable="true" data-key="p1_text">
-          在这里写下你想说的话……
-        </p>
-        <div class="abs avatar avatar-br" onclick="uploadAvatar(1)">
-          <img id="avatar1" src="" alt="">
+
+        <!-- 上半框背景图：给 img 加 src="图片地址" 即可 -->
+        <div class="abs card-bg img-slot">
+          <img id="img_p1_bg" alt="">
+          <div class="img-ph">背景图 · 给 img 加 src</div>
+        </div>
+
+        <!-- 头像：给 img 加 src="图片地址" -->
+        <div class="abs card-avatar avatar-slot">
+          <img id="avatar1" alt="">
           <div class="avatar-ph">+</div>
         </div>
+
+        <!-- 大字 / 小字 -->
+        <div class="abs card-name">青梅绿茶</div>
+        <div class="abs card-sub">INFP｜情緒；无尽夏</div>
       </div>
 
-      <div class="abs footer-line"></div>
       <div class="abs footer-title">PRIVATE COMMISSION</div>
-      <div class="abs footer-sub">UNAUTHORIZED USE, COPYING, OR REDISTRIBUTION IS STRICTLY PROHIBITED</div>
 
       <button class="abs nav-btn nav-br" onclick="goTo(1)">了解我 / come to me ↓</button>
     </section>
@@ -46,38 +51,38 @@
     <!-- ============ 第2页 ============ -->
     <section class="slide" data-index="1">
       <div class="abs p2-title">INFORMATION</div>
-      <div class="abs p2-intro editable" contenteditable="true" data-key="p2_intro">
+      <div class="abs p2-intro">
         人与人的关系就像织毛线<br>
         织的时候小心翼翼付出漫长的时间也只是初具雏形<br>
-        而拆掉的时候只需要松手轻轻一拉一切都会回到原点
+        而拆开的时候只需要松手轻轻一拉一切都会回到原点
       </div>
 
-      <div class="abs avatar p2-avatar" onclick="uploadAvatar(2)">
-        <img id="avatar2" src="" alt="">
+      <div class="abs avatar p2-avatar avatar-slot">
+        <img id="avatar2" alt="">
         <div class="avatar-ph">+</div>
       </div>
-      <div class="abs p2-name editable" contenteditable="true" data-key="p2_name">@衔尾蛇</div>
+      <div class="abs p2-name">@衔尾蛇</div>
 
       <div class="abs p2-infobox">
-        <div class="info-line"><span>姓名</span><i class="editable" contenteditable="true" data-key="p2_i_name">Siti Anisa</i></div>
-        <div class="info-line"><span>年龄</span><i class="editable" contenteditable="true" data-key="p2_i_age">21 Years old</i></div>
-        <div class="info-line"><span>星座</span><i class="editable" contenteditable="true" data-key="p2_i_zodiac">Scorpio</i></div>
-        <div class="info-line"><span>属性</span><i class="editable" contenteditable="true" data-key="p2_i_attr">Female</i></div>
-        <div class="info-line"><span>MBTI</span><i class="editable" contenteditable="true" data-key="p2_i_mbti">INTJ-A</i></div>
+        <div class="info-line"><span>姓名</span><i>Siti Anisa</i></div>
+        <div class="info-line"><span>年龄</span><i>21 Years old</i></div>
+        <div class="info-line"><span>星座</span><i>Scorpio</i></div>
+        <div class="info-line"><span>属性</span><i>Female</i></div>
+        <div class="info-line"><span>MBTI</span><i>INTJ-A</i></div>
       </div>
 
-      <div class="abs img-slot p2-img1" onclick="uploadImage(2,'big')" data-slot="p2_big">
-        <img id="img_p2_big" src="" alt="">
-        <div class="img-ph">点击上传图片</div>
+      <div class="abs img-slot p2-img1">
+        <img id="img_p2_big" alt="">
+        <div class="img-ph">图片 · 给 img 加 src</div>
       </div>
 
-      <div class="abs p2-textbox editable" contenteditable="true" data-key="p2_t1">
+      <div class="abs p2-textbox">
         Mrs. Siti Anisa · 21 Years old · Female · Jakarta · Account owner
       </div>
 
-      <div class="abs img-slot p2-img2" onclick="uploadImage(2,'side')" data-slot="p2_side">
-        <img id="img_p2_side" src="" alt="">
-        <div class="img-ph">点击上传图片</div>
+      <div class="abs img-slot p2-img2">
+        <img id="img_p2_side" alt="">
+        <div class="img-ph">图片 · 给 img 加 src</div>
       </div>
 
       <button class="abs nav-btn nav-bl" onclick="goTo(0)">← 上一页</button>
@@ -86,21 +91,17 @@
 
     <!-- ============ 第3页 ============ -->
     <section class="slide" data-index="2">
-      <div class="abs img-slot p3-img-back" onclick="uploadImage(3,'back')" data-slot="p3_back">
-        <img id="img_p3_back" src="" alt=""><div class="img-ph">背景图</div>
+      <div class="abs img-slot p3-img-back">
+        <img id="img_p3_back" alt=""><div class="img-ph">背景图</div>
       </div>
-      <div class="abs img-slot p3-img-front" onclick="uploadImage(3,'front')" data-slot="p3_front">
-        <img id="img_p3_front" src="" alt=""><div class="img-ph">前景图</div>
+      <div class="abs img-slot p3-img-front">
+        <img id="img_p3_front" alt=""><div class="img-ph">前景图</div>
       </div>
 
       <div class="abs p3-totem"></div>
 
-      <div class="abs p3-caption editable" contenteditable="true" data-key="p3_cap">
-        Tears, the smallest sea.
-      </div>
-      <div class="abs p3-commission editable" contenteditable="true" data-key="p3_comm">
-        COMMISSION
-      </div>
+      <div class="abs p3-caption">Tears, the smallest sea.</div>
+      <div class="abs p3-commission">COMMISSION</div>
 
       <button class="abs nav-btn nav-bl" onclick="goTo(1)">← 上一页</button>
       <button class="abs nav-btn nav-br" onclick="goTo(3)">come here →</button>
@@ -110,130 +111,115 @@
     <section class="slide" data-index="3">
       <div class="abs p4-block ink-card">
         <div class="ink-layer"></div>
-        <p class="abs p4-block-text editable" contenteditable="true" data-key="p4_main">
+        <p class="abs p4-block-text">
           Some day I wanna lay down<br>Like god did on sunday
         </p>
-        <div class="abs img-slot p4-mini1" onclick="uploadImage(4,'mini1')" data-slot="p4_mini1">
-          <img id="img_p4_mini1" src="" alt=""><div class="img-ph">小图</div>
+        <div class="abs img-slot p4-mini1">
+          <img id="img_p4_mini1" alt=""><div class="img-ph">小图</div>
         </div>
-        <div class="abs img-slot p4-mini2" onclick="uploadImage(4,'mini2')" data-slot="p4_mini2">
-          <img id="img_p4_mini2" src="" alt=""><div class="img-ph">小图</div>
+        <div class="abs img-slot p4-mini2">
+          <img id="img_p4_mini2" alt=""><div class="img-ph">小图</div>
         </div>
-        <div class="abs img-slot p4-mini3" onclick="uploadImage(4,'mini3')" data-slot="p4_mini3">
-          <img id="img_p4_mini3" src="" alt=""><div class="img-ph">碎图</div>
+        <div class="abs img-slot p4-mini3">
+          <img id="img_p4_mini3" alt=""><div class="img-ph">碎图</div>
         </div>
       </div>
 
-      <div class="abs img-slot p4-tall" onclick="uploadImage(4,'tall')" data-slot="p4_tall">
-        <img id="img_p4_tall" src="" alt=""><div class="img-ph">竖图</div>
+      <div class="abs img-slot p4-tall">
+        <img id="img_p4_tall" alt=""><div class="img-ph">竖图</div>
       </div>
 
-      <div class="abs p4-cap1 editable" contenteditable="true" data-key="p4_cap1">
-        Things fall apart<br>And time breaks your heart
-      </div>
-      <div class="abs p4-cap2 editable" contenteditable="true" data-key="p4_cap2">
-        Years ahead but way behind<br>I'm on one two three four five
-      </div>
-      <div class="abs img-slot p4-side" onclick="uploadImage(4,'side')" data-slot="p4_side">
-        <img id="img_p4_side" src="" alt=""><div class="img-ph">小图</div>
+      <div class="abs p4-cap1">Things fall apart<br>And time breaks your heart</div>
+      <div class="abs p4-cap2">Years ahead but way behind<br>I'm on one two three four five</div>
+
+      <div class="abs img-slot p4-side">
+        <img id="img_p4_side" alt=""><div class="img-ph">小图</div>
       </div>
 
       <button class="abs nav-btn nav-bl" onclick="goTo(2)">← 上一页</button>
       <button class="abs nav-btn nav-br" onclick="goTo(4)">and then →</button>
     </section>
 
-    <!-- ============ 第5页 · 白底 · 图片 3/4（上 + 左下） + 右下文字框 ============ -->
+    <!-- ============ 第5页 · 图片 3/4 + 右下文字框 ============ -->
     <section class="slide" data-index="4">
-      <!-- 上方整条图（600 × 400） -->
-      <div class="abs img-slot p5-img-top" onclick="uploadImage(5,'top')" data-slot="p5_top">
-        <img id="img_p5_top" src="" alt="">
-        <div class="img-ph">点击上传上方图片</div>
+      <div class="abs img-slot p5-img-top">
+        <img id="img_p5_top" alt="">
+        <div class="img-ph">上方图片 · 给 img 加 src</div>
       </div>
 
-      <!-- 左下图片（300 × 400） -->
-      <div class="abs img-slot p5-img-left" onclick="uploadImage(5,'left')" data-slot="p5_left">
-        <img id="img_p5_left" src="" alt="">
-        <div class="img-ph">点击上传左下图片</div>
+      <div class="abs img-slot p5-img-left">
+        <img id="img_p5_left" alt="">
+        <div class="img-ph">左下图片 · 给 img 加 src</div>
       </div>
 
-      <!-- 右下 1/4 区域内的可编辑文字框 -->
-      <div class="abs p5-textbox editable" contenteditable="true" data-key="p5_text">
-        在这里写下你想说的话……
+      <div class="abs p5-textbox">
+        在这里写下你想说的话……（在 index.html 中修改）
       </div>
 
       <button class="abs nav-btn nav-bl" onclick="goTo(3)">← 上一页</button>
       <button class="abs nav-btn nav-br" onclick="goTo(5)">the last →</button>
     </section>
 
-    <!-- ============ 第6页 · 白底 · 三图错落 + 四链接 + 右下文字框 ============ -->
+    <!-- ============ 第6页 · 三图错落 + 四链接 + 右下文字框 ============ -->
     <section class="slide" data-index="5">
-      <!-- 左上图 -->
-      <div class="abs img-slot p6-img1" onclick="uploadImage(6,'i1')" data-slot="p6_i1">
-        <img id="img_p6_i1" src="" alt=""><div class="img-ph">图1</div>
+      <div class="abs img-slot p6-img1">
+        <img id="img_p6_i1" alt=""><div class="img-ph">图1</div>
       </div>
 
-      <!-- 右上：链接 1、2 -->
       <div class="abs p6-links-tr">
         <div class="link-block">
-          <input class="link-label" type="text" placeholder="链接标题" data-link-label="1" value="链接一">
-          <a class="link-card" href="#" target="_blank" data-link="1">点击访问 →</a>
+          <div class="link-label">链接一</div>
+          <a class="link-card" href="https://example.com" target="_blank">点击访问 →</a>
         </div>
         <div class="link-block">
-          <input class="link-label" type="text" placeholder="链接标题" data-link-label="2" value="链接二">
-          <a class="link-card" href="#" target="_blank" data-link="2">点击访问 →</a>
+          <div class="link-label">链接二</div>
+          <a class="link-card" href="https://example.com" target="_blank">点击访问 →</a>
         </div>
       </div>
 
-      <!-- 左中：链接 3、4 -->
       <div class="abs p6-links-ml">
         <div class="link-block">
-          <input class="link-label" type="text" placeholder="链接标题" data-link-label="3" value="链接三">
-          <a class="link-card" href="#" target="_blank" data-link="3">点击访问 →</a>
+          <div class="link-label">链接三</div>
+          <a class="link-card" href="https://example.com" target="_blank">点击访问 →</a>
         </div>
         <div class="link-block">
-          <input class="link-label" type="text" placeholder="链接标题" data-link-label="4" value="链接四">
-          <a class="link-card" href="#" target="_blank" data-link="4">点击访问 →</a>
+          <div class="link-label">链接四</div>
+          <a class="link-card" href="https://example.com" target="_blank">点击访问 →</a>
         </div>
       </div>
 
-      <!-- 右中图 -->
-      <div class="abs img-slot p6-img2" onclick="uploadImage(6,'i2')" data-slot="p6_i2">
-        <img id="img_p6_i2" src="" alt=""><div class="img-ph">图2</div>
+      <div class="abs img-slot p6-img2">
+        <img id="img_p6_i2" alt=""><div class="img-ph">图2</div>
       </div>
 
-      <!-- 左下图 -->
-      <div class="abs img-slot p6-img3" onclick="uploadImage(6,'i3')" data-slot="p6_i3">
-        <img id="img_p6_i3" src="" alt=""><div class="img-ph">图3</div>
+      <div class="abs img-slot p6-img3">
+        <img id="img_p6_i3" alt=""><div class="img-ph">图3</div>
       </div>
 
-      <!-- 右下：可编辑文字框 -->
-      <div class="abs p6-textbox editable" contenteditable="true" data-key="p6_text">
-        在这里写下你想说的话……
+      <div class="abs p6-textbox">
+        在这里写下你想说的话……（在 index.html 中修改）
       </div>
 
       <button class="abs nav-btn nav-bl" onclick="goTo(4)">← 上一页</button>
     </section>
 
-  </div><!-- /pages -->
+  </div>
 
-  <!-- 音乐控制（画布右上角） -->
   <div class="music-control">
     <span class="music-note">♪</span>
     <button class="music-btn" id="musicBtn">▶</button>
   </div>
 </div>
 
-<!-- ===== 底部可编辑文字框（固定） ===== -->
-<div class="bottom-bar" id="bottomBar">
-  <div class="text-frame editable" contenteditable="true" data-key="bottom_text">
-    底部文字，点击可编辑……
-  </div>
+<!-- ===== 底部文字（改这里的文字即可） ===== -->
+<div class="bottom-bar">
+  <div class="text-frame">底部文字 · 在 index.html 中修改</div>
 </div>
 
-<audio id="bgm" loop><source src="bgm.mp3" type="audio/mpeg"></audio>
-
-<input type="file" id="avatarUploader" accept="image/*" hidden>
-<input type="file" id="imageUploader" accept="image/*" hidden>
+<!-- 音乐：把 src 换成你自己的音乐地址 -->
+<audio id="bgm" loop>
+  <source src="bgm.mp3" type="audio/mpeg">
+</audio>
 
 <script src="script.js"></script>
 </body>
