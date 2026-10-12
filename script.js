@@ -1,9 +1,6 @@
-/* ============================================
-   六页翻页 · 自动缩放画布（避开顶底文字框）· 内容编辑 · 音乐
-   ============================================ */
 (function () {
-  const DESIGN_W = 800;
-  const DESIGN_H = 600;
+  const DESIGN_W = 600;
+  const DESIGN_H = 800;
 
   const viewport  = document.getElementById('viewport');
   const topBar    = document.getElementById('topBar');
@@ -12,22 +9,19 @@
   let cur = 0;
 
   /* ============================================
-     ★ 核心：把 800×600 画布等比缩放进中间可用区域
-     可用区域 = 屏幕 - 顶部栏 - 底部栏 - 四周留白
+     画布自适应（避开顶底文字框，四周留白）
      ============================================ */
   function fitViewport() {
     const vw = window.innerWidth;
     const vh = window.innerHeight;
     const topH    = topBar.offsetHeight;
     const bottomH = bottomBar.offsetHeight;
+    const padding = 16;
 
-    const padding = 16;                              // 画布四周留白
-    const availW  = vw - padding * 2;
-    const availH  = vh - topH - bottomH - padding * 2;
+    const availW = vw - padding * 2;
+    const availH = vh - topH - bottomH - padding * 2;
+    const scale  = Math.min(availW / DESIGN_W, availH / DESIGN_H);
 
-    const scale = Math.min(availW / DESIGN_W, availH / DESIGN_H);
-
-    // 画布垂直位置：位于顶栏和底栏之间的正中
     const centerX = vw / 2;
     const centerY = topH + (vh - topH - bottomH) / 2;
 
@@ -38,17 +32,12 @@
 
   window.addEventListener('resize', fitViewport);
   window.addEventListener('orientationchange', () => setTimeout(fitViewport, 120));
-
-  // 顶底文字框高度变化时也重新适配
   if (window.ResizeObserver) {
     const ro = new ResizeObserver(fitViewport);
     ro.observe(topBar);
     ro.observe(bottomBar);
   }
-
-  // 初次适配
   fitViewport();
-  // 图片/字体加载后再校准一次
   window.addEventListener('load', fitViewport);
 
   /* ============================================
@@ -66,7 +55,6 @@
     if (e.key === 'ArrowUp'   || e.key === 'ArrowLeft')  { e.preventDefault(); goTo(cur - 1); }
   });
 
-  // 触屏滑动（只在画布内有效，避免误触顶底文字框）
   let tX = 0;
   viewport.addEventListener('touchstart', e => tX = e.touches[0].clientX, { passive: true });
   viewport.addEventListener('touchend', e => {
@@ -75,13 +63,12 @@
   }, { passive: true });
 
   /* ============================================
-     文字自动保存 / 恢复
+     文字保存 / 恢复
      ============================================ */
   document.addEventListener('input', e => {
     const el = e.target.closest('[data-key]');
     if (el) {
       localStorage.setItem('edit_' + el.dataset.key, el.textContent);
-      // 顶底文字框内容变长时，重新适配画布
       if (el.dataset.key === 'top_text' || el.dataset.key === 'bottom_text') {
         requestAnimationFrame(fitViewport);
       }
@@ -133,7 +120,6 @@
     r.readAsDataURL(f); this.value = '';
   });
 
-  // 恢复所有图片 / 头像
   ['avatar1','avatar2',
    'img_p2_big','img_p2_side',
    'img_p3_back','img_p3_front',
