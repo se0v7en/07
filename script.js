@@ -1,3 +1,6 @@
+/* ============================================
+   六页翻页 · 自动缩放画布 · 内容编辑 · 音乐
+   ============================================ */
 (function () {
   const DESIGN_W = 600;
   const DESIGN_H = 800;
@@ -55,6 +58,7 @@
     if (e.key === 'ArrowUp'   || e.key === 'ArrowLeft')  { e.preventDefault(); goTo(cur - 1); }
   });
 
+  // 触屏滑动（只作用于画布内部）
   let tX = 0;
   viewport.addEventListener('touchstart', e => tX = e.touches[0].clientX, { passive: true });
   viewport.addEventListener('touchend', e => {
@@ -63,7 +67,7 @@
   }, { passive: true });
 
   /* ============================================
-     文字保存 / 恢复
+     文字自动保存 / 恢复
      ============================================ */
   document.addEventListener('input', e => {
     const el = e.target.closest('[data-key]');
@@ -120,11 +124,12 @@
     r.readAsDataURL(f); this.value = '';
   });
 
+  // 恢复所有图片 / 头像
   ['avatar1','avatar2',
    'img_p2_big','img_p2_side',
    'img_p3_back','img_p3_front',
    'img_p4_mini1','img_p4_mini2','img_p4_mini3','img_p4_tall','img_p4_side',
-   'img_p5_i1','img_p5_i2','img_p5_i3','img_p5_i4',
+   'img_p5_top','img_p5_left',
    'img_p6_i1','img_p6_i2','img_p6_i3'
   ].forEach(id => {
     const v = localStorage.getItem('img_' + id);
