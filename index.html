@@ -8,123 +8,288 @@
 </head>
 <body>
 
-  <!-- 背景层：暗红色渐变 -->
-  <div class="bg-layer"></div>
-
-  <!-- 书本容器 -->
-  <div class="book-wrapper">
-    <div class="book" id="book">
-
-      <!-- ===== 第1页：背景 + 头像 + 一句话 ===== -->
-      <div class="page page-cover">
-        <div class="page-bg" id="pageBg1" style="background-image:url('');">
-        </div>
-        <div class="page-content cover-content">
-          <div class="avatar" id="avatar1">
-            <img src="" alt="头像" id="avatarImg1">
-            <div class="avatar-placeholder">点击更换头像</div>
-          </div>
-          <p class="editable-line" contenteditable="true" data-key="line1">
-            在这里写下你想说的话……
-          </p>
-        </div>
-      </div>
-
-      <!-- ===== 第2页：个人信息 ===== -->
-      <div class="page page-info">
-        <div class="page-bg page-bg-info"></div>
-        <div class="page-content info-content">
-          <h2 class="page-title">个人信息</h2>
-          <div class="info-item">
-            <span class="info-label">姓名</span>
-            <span class="info-value" contenteditable="true" data-key="name">你的名字</span>
-          </div>
-          <div class="info-item">
-            <span class="info-label">年龄</span>
-            <span class="info-value" contenteditable="true" data-key="age">18</span>
-          </div>
-          <div class="info-item">
-            <span class="info-label">职业</span>
-            <span class="info-value" contenteditable="true" data-key="job">职业</span>
-          </div>
-          <div class="info-item">
-            <span class="info-label">简介</span>
-            <span class="info-value" contenteditable="true" data-key="bio">个人简介……</span>
-          </div>
-          <div class="info-item">
-            <span class="info-label">邮箱</span>
-            <span class="info-value" contenteditable="true" data-key="email">email@example.com</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- ===== 第3页：背景 + 头像 + 一句话 ===== -->
-      <div class="page page-cover">
-        <div class="page-bg" id="pageBg3" style="background-image:url('');"></div>
-        <div class="page-content cover-content">
-          <div class="avatar" id="avatar3">
-            <img src="" alt="头像" id="avatarImg3">
-            <div class="avatar-placeholder">点击更换头像</div>
-          </div>
-          <p class="editable-line" contenteditable="true" data-key="line3">
-            第三页的一句话……
-          </p>
-        </div>
-      </div>
-
-      <!-- ===== 第4页：价格分区 ===== -->
-      <div class="page page-price">
-        <div class="page-bg page-bg-price"></div>
-        <div class="page-content price-content">
-          <h2 class="page-title">价格表</h2>
-          <div class="price-list" id="priceList">
-            <!-- 价格项通过 JS 动态生成，也可手动编辑 -->
-          </div>
-          <button class="btn-add-price" onclick="addPriceItem()">+ 添加价格项</button>
-        </div>
-      </div>
-
-      <!-- ===== 第5页：背景 + 头像 + 一句话 ===== -->
-      <div class="page page-cover">
-        <div class="page-bg" id="pageBg5" style="background-image:url('');"></div>
-        <div class="page-content cover-content">
-          <div class="avatar" id="avatar5">
-            <img src="" alt="头像" id="avatarImg5">
-            <div class="avatar-placeholder">点击更换头像</div>
-          </div>
-          <p class="editable-line" contenteditable="true" data-key="line5">
-            第五页的一句话……
-          </p>
-        </div>
-      </div>
-
-      <!-- ===== 第6页：四个链接 ===== -->
-      <div class="page page-links">
-        <div class="page-bg page-bg-links"></div>
-        <div class="page-content links-content">
-          <h2 class="page-title">链接</h2>
-          <div class="link-grid">
-            <a class="link-card" href="#" target="_blank" contenteditable="true" data-key="link1">链接 1</a>
-            <a class="link-card" href="#" target="_blank" contenteditable="true" data-key="link2">链接 2</a>
-            <a class="link-card" href="#" target="_blank" contenteditable="true" data-key="link3">链接 3</a>
-            <a class="link-card" href="#" target="_blank" contenteditable="true" data-key="link4">链接 4</a>
-          </div>
-          <p class="hint">点击链接文字可编辑显示名称；长按/右键点击可编辑链接地址</p>
-        </div>
-      </div>
-
-    </div>
+  <!-- ===== 音乐播放按钮（固定最上层，不影响排版） ===== -->
+  <div class="music-control" id="musicControl">
+    <span class="music-note">♪</span>
+    <button class="music-btn" id="musicBtn" title="播放/暂停">▶</button>
   </div>
 
-  <!-- 翻页按钮 -->
-  <div class="controls">
-    <button class="nav-btn" id="prevBtn">‹ 上一页</button>
-    <span class="page-indicator" id="pageIndicator">1 / 6</span>
-    <button class="nav-btn" id="nextBtn">下一页 ›</button>
-  </div>
+  <!-- 背景音乐（可替换 src） -->
+  <audio id="bgm" loop>
+    <source src="bgm.mp3" type="audio/mpeg">
+    <!-- 替换为你的音乐链接，如：
+    <source src="https://你的域名/music.mp3" type="audio/mpeg">
+    -->
+  </audio>
 
-  <!-- 隐藏的文件上传 input -->
+  <!-- ===== 翻页容器 ===== -->
+  <div class="pages-wrapper">
+    <div class="pages" id="pages">
+
+      <!-- ==================== 第1页 ==================== -->
+      <section class="page" data-index="0">
+        <div class="page-inner page1-layout">
+          <!-- 暗红→白水墨晕染信息框 -->
+          <div class="ink-card" id="inkCard1">
+            <div class="ink-card-bg" id="inkCardBg1"></div>
+            <div class="ink-card-content">
+              <p class="editable-text" contenteditable="true" data-key="page1_text">
+                在这里写下你想说的话……
+              </p>
+            </div>
+            <!-- 头像放在信息框右下角 -->
+            <div class="avatar-wrap" onclick="uploadAvatar(1)">
+              <img id="avatar1" src="" alt="">
+              <div class="avatar-placeholder" id="avatarPlaceholder1">+</div>
+            </div>
+          </div>
+          <!-- 向下翻页按钮 -->
+          <div class="page-nav bottom-right">
+            <button class="nav-btn" onclick="goTo(1)">
+              <span>了解我 / come to me</span>
+              <span class="arrow">↓</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 第2页 ==================== -->
+      <section class="page" data-index="1">
+        <div class="page-inner page2-layout">
+          <!-- 上方信息框 -->
+          <div class="info-card glass-card">
+            <h2 class="info-title">INFORMATION</h2>
+            <div class="info-grid">
+              <div class="info-row">
+                <span class="info-label">姓名</span>
+                <span class="editable-text" contenteditable="true" data-key="p2_name">你的名字</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">年龄</span>
+                <span class="editable-text" contenteditable="true" data-key="p2_age">22</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">星座</span>
+                <span class="editable-text" contenteditable="true" data-key="p2_zodiac">天蝎座</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">属性</span>
+                <span class="editable-text" contenteditable="true" data-key="p2_attr">INTJ</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">MBTI</span>
+                <span class="editable-text" contenteditable="true" data-key="p2_mbti">INTJ-A</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 第一张图（可替换） -->
+          <div class="image-slot" onclick="uploadImage(2, 'img1')" data-slot="p2_img1">
+            <img id="img_p2_1" src="" alt="">
+            <div class="image-placeholder">点击上传图片 1</div>
+          </div>
+
+          <!-- 文字框 -->
+          <div class="text-box glass-card">
+            <p class="editable-text" contenteditable="true" data-key="p2_text1">
+              人与人的关系就像织毛线，织的时候小心翼翼付出漫长的时间也只是初具雏形……
+            </p>
+          </div>
+
+          <!-- 第二张图（可替换） -->
+          <div class="image-slot" onclick="uploadImage(2, 'img2')" data-slot="p2_img2">
+            <img id="img_p2_2" src="" alt="">
+            <div class="image-placeholder">点击上传图片 2</div>
+          </div>
+
+          <!-- 第二个文字框 -->
+          <div class="text-box glass-card">
+            <p class="editable-text" contenteditable="true" data-key="p2_text2">
+              在这里写下第二段文字……
+            </p>
+          </div>
+
+          <!-- 翻页按钮 -->
+          <div class="page-nav bottom-left">
+            <button class="nav-btn" onclick="goTo(0)">
+              <span class="arrow">←</span>
+              <span>上一页</span>
+            </button>
+          </div>
+          <div class="page-nav bottom-right">
+            <button class="nav-btn" onclick="goTo(2)">
+              <span>go on</span>
+              <span class="arrow">→</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 第3页 ==================== -->
+      <section class="page" data-index="2">
+        <div class="page-inner page3-layout">
+          <div class="p3-content">
+            <!-- 左侧图片堆叠（可替换） -->
+            <div class="p3-images">
+              <div class="image-slot p3-img-back" onclick="uploadImage(3, 'back')" data-slot="p3_back">
+                <img id="img_p3_back" src="" alt="">
+                <div class="image-placeholder">背景图</div>
+              </div>
+              <div class="image-slot p3-img-front" onclick="uploadImage(3, 'front')" data-slot="p3_front">
+                <img id="img_p3_front" src="" alt="">
+                <div class="image-placeholder">前景图</div>
+              </div>
+            </div>
+            <!-- 右侧暗红→白水墨晕染装饰 -->
+            <div class="p3-ink-deco"></div>
+          </div>
+          <!-- 图片下方可编辑文字框 -->
+          <div class="text-box glass-card p3-text">
+            <p class="editable-text" contenteditable="true" data-key="p3_text">
+              Tears, the smallest sea.
+            </p>
+          </div>
+          <div class="p3-commission">
+            <span class="editable-text" contenteditable="true" data-key="p3_commission">COMMISSION</span>
+          </div>
+
+          <div class="page-nav bottom-left">
+            <button class="nav-btn" onclick="goTo(1)">
+              <span class="arrow">←</span><span>上一页</span>
+            </button>
+          </div>
+          <div class="page-nav bottom-right">
+            <button class="nav-btn" onclick="goTo(3)">
+              <span>come here</span><span class="arrow">→</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 第4页 ==================== -->
+      <section class="page" data-index="3">
+        <div class="page-inner page4-layout">
+          <div class="p4-left ink-card">
+            <div class="ink-card-bg" id="inkCardBg4"></div>
+            <div class="ink-card-content">
+              <p class="editable-text" contenteditable="true" data-key="p4_left">
+                Some day I wanna lay down<br>
+                Like god did on sunday
+              </p>
+            </div>
+          </div>
+          <div class="p4-right">
+            <div class="image-slot" onclick="uploadImage(4, 'main')" data-slot="p4_main">
+              <img id="img_p4_main" src="" alt="">
+              <div class="image-placeholder">点击上传图片</div>
+            </div>
+            <div class="text-box glass-card p4-text-box">
+              <p class="editable-text" contenteditable="true" data-key="p4_right">
+                Things fall apart<br>And time breaks your heart
+              </p>
+            </div>
+          </div>
+
+          <div class="page-nav bottom-left">
+            <button class="nav-btn" onclick="goTo(2)">
+              <span class="arrow">←</span><span>上一页</span>
+            </button>
+          </div>
+          <div class="page-nav bottom-right">
+            <button class="nav-btn" onclick="goTo(4)">
+              <span>and then</span><span class="arrow">→</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 第5页 ==================== -->
+      <section class="page" data-index="4">
+        <div class="page-inner page5-layout">
+          <div class="p5-grid">
+            <div class="image-slot" onclick="uploadImage(5, 'a')" data-slot="p5_a">
+              <img id="img_p5_a" src="" alt="">
+              <div class="image-placeholder">图片 A</div>
+            </div>
+            <div class="image-slot" onclick="uploadImage(5, 'b')" data-slot="p5_b">
+              <img id="img_p5_b" src="" alt="">
+              <div class="image-placeholder">图片 B</div>
+            </div>
+            <div class="image-slot" onclick="uploadImage(5, 'c')" data-slot="p5_c">
+              <img id="img_p5_c" src="" alt="">
+              <div class="image-placeholder">图片 C</div>
+            </div>
+            <div class="image-slot" onclick="uploadImage(5, 'd')" data-slot="p5_d">
+              <img id="img_p5_d" src="" alt="">
+              <div class="image-placeholder">图片 D</div>
+            </div>
+          </div>
+          <div class="p5-text">
+            <p class="editable-text" contenteditable="true" data-key="p5_text">
+              爱与音乐，也是有一生要过的。
+            </p>
+          </div>
+
+          <div class="page-nav bottom-left">
+            <button class="nav-btn" onclick="goTo(3)">
+              <span class="arrow">←</span><span>上一页</span>
+            </button>
+          </div>
+          <div class="page-nav bottom-right">
+            <button class="nav-btn" onclick="goTo(5)">
+              <span>the last</span><span class="arrow">→</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 第6页 ==================== -->
+      <section class="page" data-index="5">
+        <div class="page-inner page6-layout">
+          <!-- 左侧文字区，暗红→白渐变 -->
+          <div class="p6-left">
+            <p class="editable-text ink-text" contenteditable="true" data-key="p6_line1">
+              Some day some day
+            </p>
+            <p class="editable-text ink-text" contenteditable="true" data-key="p6_line2">
+              Some day I'll
+            </p>
+          </div>
+
+          <!-- 右侧四个链接，每个链接上方有可编辑文字框 -->
+          <div class="p6-right">
+            <div class="link-block">
+              <input class="link-label-input" type="text" placeholder="链接标题" data-link-label="1" value="链接一">
+              <a class="link-card" href="#" target="_blank" data-link="1">点击访问 →</a>
+            </div>
+            <div class="link-block">
+              <input class="link-label-input" type="text" placeholder="链接标题" data-link-label="2" value="链接二">
+              <a class="link-card" href="#" target="_blank" data-link="2">点击访问 →</a>
+            </div>
+            <div class="link-block">
+              <input class="link-label-input" type="text" placeholder="链接标题" data-link-label="3" value="链接三">
+              <a class="link-card" href="#" target="_blank" data-link="3">点击访问 →</a>
+            </div>
+            <div class="link-block">
+              <input class="link-label-input" type="text" placeholder="链接标题" data-link-label="4" value="链接四">
+              <a class="link-card" href="#" target="_blank" data-link="4">点击访问 →</a>
+            </div>
+          </div>
+
+          <div class="page-nav bottom-left">
+            <button class="nav-btn" onclick="goTo(4)">
+              <span class="arrow">←</span><span>上一页</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- /pages -->
+  </div><!-- /pages-wrapper -->
+
+  <!-- 隐藏的 input -->
   <input type="file" id="avatarUploader" accept="image/*" hidden>
+  <input type="file" id="imageUploader" accept="image/*" hidden>
 
   <script src="script.js"></script>
 </body>
