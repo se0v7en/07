@@ -1,18 +1,19 @@
 /* ============================================
-   六页翻页 · 自动缩放画布 · 内容编辑 · 音乐
+   六页翻页 · 画布自适应 · 音乐播放
+   （内容全部在 HTML 中修改，本文件只做交互）
    ============================================ */
 (function () {
   const DESIGN_W = 600;
   const DESIGN_H = 800;
 
   const viewport  = document.getElementById('viewport');
-  const topBar    = document.getElementById('topBar');
-  const bottomBar = document.getElementById('bottomBar');
+  const topBar    = document.querySelector('.top-bar');
+  const bottomBar = document.querySelector('.bottom-bar');
   const slides    = document.querySelectorAll('.slide');
   let cur = 0;
 
   /* ============================================
-     画布自适应（避开顶底文字框，四周留白）
+     画布自适应
      ============================================ */
   function fitViewport() {
     const vw = window.innerWidth;
@@ -53,108 +54,16 @@
   };
 
   document.addEventListener('keydown', e => {
-    if (document.activeElement && document.activeElement.isContentEditable) return;
     if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { e.preventDefault(); goTo(cur + 1); }
     if (e.key === 'ArrowUp'   || e.key === 'ArrowLeft')  { e.preventDefault(); goTo(cur - 1); }
   });
 
-  // 触屏滑动（只作用于画布内部）
   let tX = 0;
   viewport.addEventListener('touchstart', e => tX = e.touches[0].clientX, { passive: true });
   viewport.addEventListener('touchend', e => {
     const d = e.changedTouches[0].clientX - tX;
     if (Math.abs(d) > 60) goTo(cur + (d < 0 ? 1 : -1));
   }, { passive: true });
-
-  /* ============================================
-     文字自动保存 / 恢复
-     ============================================ */
-  document.addEventListener('input', e => {
-    const el = e.target.closest('[data-key]');
-    if (el) {
-      localStorage.setItem('edit_' + el.dataset.key, el.textContent);
-      if (el.dataset.key === 'top_text' || el.dataset.key === 'bottom_text') {
-        requestAnimationFrame(fitViewport);
-      }
-    }
-    if (e.target.classList.contains('link-label')) {
-      localStorage.setItem('linkLabel' + e.target.dataset.linkLabel, e.target.value);
-    }
-  });
-  document.querySelectorAll('[data-key]').forEach(el => {
-    const v = localStorage.getItem('edit_' + el.dataset.key);
-    if (v !== null) el.textContent = v;
-  });
-  document.querySelectorAll('.link-label').forEach(inp => {
-    const v = localStorage.getItem('linkLabel' + inp.dataset.linkLabel);
-    if (v !== null) inp.value = v;
-  });
-
-  /* ============================================
-     头像上传
-     ============================================ */
-  const avUp = document.getElementById('avatarUploader');
-  let curAv = null;
-  window.uploadAvatar = n => { curAv = 'avatar' + n; avUp.click(); };
-  avUp.addEventListener('change', function () {
-    const f = this.files[0]; if (!f || !curAv) return;
-    const r = new FileReader();
-    r.onload = e => {
-      const img = document.getElementById(curAv);
-      if (img) { img.src = e.target.result; img.classList.add('visible'); }
-      localStorage.setItem('img_' + curAv, e.target.result);
-    };
-    r.readAsDataURL(f); this.value = '';
-  });
-
-  /* ============================================
-     图片上传
-     ============================================ */
-  const imUp = document.getElementById('imageUploader');
-  let curIm = null;
-  window.uploadImage = (p, s) => { curIm = 'img_p' + p + '_' + s; imUp.click(); };
-  imUp.addEventListener('change', function () {
-    const f = this.files[0]; if (!f || !curIm) return;
-    const r = new FileReader();
-    r.onload = e => {
-      const img = document.getElementById(curIm);
-      if (img) { img.src = e.target.result; img.classList.add('visible'); }
-      localStorage.setItem('img_' + curIm, e.target.result);
-    };
-    r.readAsDataURL(f); this.value = '';
-  });
-
-  // 恢复所有图片 / 头像
-  ['avatar1','avatar2',
-   'img_p2_big','img_p2_side',
-   'img_p3_back','img_p3_front',
-   'img_p4_mini1','img_p4_mini2','img_p4_mini3','img_p4_tall','img_p4_side',
-   'img_p5_top','img_p5_left',
-   'img_p6_i1','img_p6_i2','img_p6_i3'
-  ].forEach(id => {
-    const v = localStorage.getItem('img_' + id);
-    if (!v) return;
-    const img = document.getElementById(id);
-    if (img) { img.src = v; img.classList.add('visible'); }
-  });
-
-  /* ============================================
-     链接地址（右键 / 长按编辑）
-     ============================================ */
-  document.querySelectorAll('.link-card').forEach(c => {
-    c.addEventListener('contextmenu', e => {
-      e.preventDefault();
-      const n = c.dataset.link;
-      const curUrl = (c.href === '#' || c.href.endsWith('#')) ? '' : c.href;
-      const url = prompt('输入链接地址（完整 URL）：', curUrl);
-      if (url !== null) {
-        c.href = url || '#';
-        localStorage.setItem('linkUrl' + n, url || '#');
-      }
-    });
-    const saved = localStorage.getItem('linkUrl' + c.dataset.link);
-    if (saved) c.href = saved;
-  });
 
   /* ============================================
      音乐
