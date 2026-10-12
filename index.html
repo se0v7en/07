@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我的主页</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 背景层：暗红色渐变 -->
+  <div class="bg-layer"></div>
+
+  <!-- 书本容器 -->
+  <div class="book-wrapper">
+    <div class="book" id="book">
+
+      <!-- ===== 第1页：背景 + 头像 + 一句话 ===== -->
+      <div class="page page-cover">
+        <div class="page-bg" id="pageBg1" style="background-image:url('');">
+        </div>
+        <div class="page-content cover-content">
+          <div class="avatar" id="avatar1">
+            <img src="" alt="头像" id="avatarImg1">
+            <div class="avatar-placeholder">点击更换头像</div>
+          </div>
+          <p class="editable-line" contenteditable="true" data-key="line1">
+            在这里写下你想说的话……
+          </p>
+        </div>
+      </div>
+
+      <!-- ===== 第2页：个人信息 ===== -->
+      <div class="page page-info">
+        <div class="page-bg page-bg-info"></div>
+        <div class="page-content info-content">
+          <h2 class="page-title">个人信息</h2>
+          <div class="info-item">
+            <span class="info-label">姓名</span>
+            <span class="info-value" contenteditable="true" data-key="name">你的名字</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">年龄</span>
+            <span class="info-value" contenteditable="true" data-key="age">18</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">职业</span>
+            <span class="info-value" contenteditable="true" data-key="job">职业</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">简介</span>
+            <span class="info-value" contenteditable="true" data-key="bio">个人简介……</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">邮箱</span>
+            <span class="info-value" contenteditable="true" data-key="email">email@example.com</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== 第3页：背景 + 头像 + 一句话 ===== -->
+      <div class="page page-cover">
+        <div class="page-bg" id="pageBg3" style="background-image:url('');"></div>
+        <div class="page-content cover-content">
+          <div class="avatar" id="avatar3">
+            <img src="" alt="头像" id="avatarImg3">
+            <div class="avatar-placeholder">点击更换头像</div>
+          </div>
+          <p class="editable-line" contenteditable="true" data-key="line3">
+            第三页的一句话……
+          </p>
+        </div>
+      </div>
+
+      <!-- ===== 第4页：价格分区 ===== -->
+      <div class="page page-price">
+        <div class="page-bg page-bg-price"></div>
+        <div class="page-content price-content">
+          <h2 class="page-title">价格表</h2>
+          <div class="price-list" id="priceList">
+            <!-- 价格项通过 JS 动态生成，也可手动编辑 -->
+          </div>
+          <button class="btn-add-price" onclick="addPriceItem()">+ 添加价格项</button>
+        </div>
+      </div>
+
+      <!-- ===== 第5页：背景 + 头像 + 一句话 ===== -->
+      <div class="page page-cover">
+        <div class="page-bg" id="pageBg5" style="background-image:url('');"></div>
+        <div class="page-content cover-content">
+          <div class="avatar" id="avatar5">
+            <img src="" alt="头像" id="avatarImg5">
+            <div class="avatar-placeholder">点击更换头像</div>
+          </div>
+          <p class="editable-line" contenteditable="true" data-key="line5">
+            第五页的一句话……
+          </p>
+        </div>
+      </div>
+
+      <!-- ===== 第6页：四个链接 ===== -->
+      <div class="page page-links">
+        <div class="page-bg page-bg-links"></div>
+        <div class="page-content links-content">
+          <h2 class="page-title">链接</h2>
+          <div class="link-grid">
+            <a class="link-card" href="#" target="_blank" contenteditable="true" data-key="link1">链接 1</a>
+            <a class="link-card" href="#" target="_blank" contenteditable="true" data-key="link2">链接 2</a>
+            <a class="link-card" href="#" target="_blank" contenteditable="true" data-key="link3">链接 3</a>
+            <a class="link-card" href="#" target="_blank" contenteditable="true" data-key="link4">链接 4</a>
+          </div>
+          <p class="hint">点击链接文字可编辑显示名称；长按/右键点击可编辑链接地址</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 翻页按钮 -->
+  <div class="controls">
+    <button class="nav-btn" id="prevBtn">‹ 上一页</button>
+    <span class="page-indicator" id="pageIndicator">1 / 6</span>
+    <button class="nav-btn" id="nextBtn">下一页 ›</button>
+  </div>
+
+  <!-- 隐藏的文件上传 input -->
+  <input type="file" id="avatarUploader" accept="image/*" hidden>
+
+  <script src="script.js"></script>
+</body>
+</html>
