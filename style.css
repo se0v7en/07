@@ -23,7 +23,7 @@ html, body {
 }
 
 /* ============================================
-   顶部 / 底部 可编辑文字框（固定）
+   顶部 / 底部 文字框
    ============================================ */
 .top-bar, .bottom-bar {
   position: fixed;
@@ -52,30 +52,19 @@ html, body {
   background: rgba(255,255,255,0.9);
   border: 1px solid var(--frame-border);
   border-radius: 10px;
-  outline: none;
   line-height: 1.5;
-  transition: border-color 0.25s, box-shadow 0.25s;
   box-shadow:
     0 1px 2px rgba(92,10,26,0.04),
     0 4px 12px rgba(92,10,26,0.06);
 }
-.text-frame:hover,
-.text-frame:focus {
-  border-color: var(--ink-mid);
-  box-shadow:
-    0 2px 4px rgba(92,10,26,0.06),
-    0 8px 20px rgba(92,10,26,0.10);
-}
 
 /* ============================================
-   600×800 画布（3:4 竖版），浮空
+   600×800 画布
    ============================================ */
 .viewport {
   position: fixed;
-  left: 50%;
-  top: 50%;
-  width: 600px;
-  height: 800px;
+  left: 50%; top: 50%;
+  width: 600px; height: 800px;
   background: var(--white);
   border-radius: 14px;
   overflow: hidden;
@@ -88,16 +77,8 @@ html, body {
     0 48px 96px rgba(0,0,0,0.06);
   border: 1px solid rgba(0,0,0,0.05);
 }
+.pages { position: relative; width: 600px; height: 800px; }
 
-.pages {
-  position: relative;
-  width: 600px;
-  height: 800px;
-}
-
-/* ============================================
-   页
-   ============================================ */
 .slide {
   position: absolute; inset: 0;
   width: 600px; height: 800px;
@@ -109,16 +90,6 @@ html, body {
 .slide.active { opacity: 1; visibility: visible; z-index: 10; }
 
 .abs { position: absolute; }
-
-.editable {
-  outline: none;
-  border-bottom: 1px dashed transparent;
-  transition: border-color 0.25s, background 0.25s;
-}
-.editable:hover, .editable:focus {
-  border-color: var(--ink-mid);
-  background: rgba(92,10,26,0.04);
-}
 
 /* ============================================
    水墨晕染层
@@ -134,41 +105,60 @@ html, body {
 }
 
 /* ============================================
-   头像
+   图片槽位
+   规则：<img> 不带 src → 显示占位文字
+        <img> 带 src    → 显示图片，占位文字隐藏
    ============================================ */
-.avatar {
-  width: 80px; height: 80px; border-radius: 50%;
-  overflow: hidden; cursor: pointer;
-  background: #eee; border: 3px solid #fff;
-  box-shadow: 0 6px 24px rgba(92,10,26,0.28);
+.img-slot {
+  position: relative;
+  overflow: hidden;
+  background: #f2f2f2;
+  border: 1.5px dashed rgba(92,10,26,0.18);
   display: flex; align-items: center; justify-content: center;
-  transition: transform .3s;
-  z-index: 5;
 }
-.avatar:hover { transform: scale(1.06); }
-.avatar img { width: 100%; height: 100%; object-fit: cover; display: none; }
-.avatar img.visible { display: block; }
+.img-slot img {
+  display: none;
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.img-slot img[src]:not([src=""]) { display: block; }
+.img-slot img[src]:not([src=""]) + .img-ph { display: none; }
+.img-ph {
+  font-size: 10px;
+  color: rgba(92,10,26,0.35);
+  text-align: center;
+  padding: 4px;
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ============================================
+   头像（圆形 / 方形通用）
+   ============================================ */
+.avatar, .avatar-slot {
+  overflow: hidden;
+  background: #eee;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.avatar { border-radius: 50%; border: 3px solid #fff; box-shadow: 0 6px 24px rgba(92,10,26,0.28); }
+.avatar-slot { border-radius: 12px; border: 3px solid #fff; box-shadow: 0 8px 24px rgba(92,10,26,0.28); }
+
+.avatar img, .avatar-slot img {
+  display: none;
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.avatar img[src]:not([src=""]),
+.avatar-slot img[src]:not([src=""]) { display: block; }
+.avatar img[src]:not([src=""]) + .avatar-ph,
+.avatar-slot img[src]:not([src=""]) + .avatar-ph { display: none; }
+
 .avatar-ph {
   position: absolute; inset: 0;
   display: flex; align-items: center; justify-content: center;
   font-size: 22px; color: rgba(92,10,26,0.3);
 }
-.avatar img.visible ~ .avatar-ph { display: none; }
-
-/* ============================================
-   图片占位
-   ============================================ */
-.img-slot {
-  overflow: hidden; cursor: pointer;
-  background: #f2f2f2;
-  border: 1.5px dashed rgba(92,10,26,0.18);
-  display: flex; align-items: center; justify-content: center;
-  transition: border-color .3s, background .3s;
-}
-.img-slot:hover { border-color: var(--ink-mid); background: rgba(92,10,26,0.04); }
-.img-slot img { width: 100%; height: 100%; object-fit: cover; display: none; }
-.img-slot img.visible { display: block; }
-.img-ph { font-size: 10px; color: rgba(92,10,26,0.35); text-align: center; padding: 4px; }
 
 /* ============================================
    翻页按钮
@@ -213,27 +203,56 @@ html, body {
 .music-btn:hover { background: var(--ink-dark); }
 
 /* ==================================================
-   ★ 第1页 · 图一
+   ★ 第1页 · 图二风格
    ================================================== */
 .topbar-left  { top: 30px; left: 40px; font-size: 13px; letter-spacing: 1px; line-height: 1.4; color: #333; }
 .topbar-dots  { top: 40px; left: 50%; transform: translateX(-50%); font-size: 8px; letter-spacing: 5px; color: #666; }
 .topbar-right { top: 30px; right: 40px; font-size: 13px; letter-spacing: 1px; line-height: 1.4; text-align: right; color: #333; }
 
-.main-card { top: 155px; left: 120px; width: 360px; height: 400px; }
-.card-text {
-  z-index: 2;
-  left: 38px; top: 60px; width: 240px;
-  font-size: 18px; line-height: 2;
-  color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+.main-card {
+  top: 100px; left: 90px;
+  width: 420px; height: 560px;
+  border-radius: 16px;
 }
-.avatar-br { right: -14px; bottom: -14px; width: 86px; height: 86px; }
 
-.footer-line  { top: 620px; left: 120px; width: 360px; height: 1px;
-                background: linear-gradient(to right, transparent, rgba(0,0,0,0.15), transparent); }
-.footer-title { top: 640px; left: 50%; transform: translateX(-50%);
-                font-size: 14px; letter-spacing: 6px; color: #333; white-space: nowrap; }
-.footer-sub   { top: 668px; left: 50%; transform: translateX(-50%);
-                font-size: 7px; letter-spacing: 0.5px; color: #999; white-space: nowrap; }
+.card-bg {
+  top: 0; left: 0;
+  width: 100%; height: 360px;
+  border-radius: 16px 16px 0 0;
+  border: none;
+  background: #f5f5f5;
+}
+.card-bg .img-ph { font-size: 12px; }
+
+.card-avatar {
+  top: 330px; right: 25px;
+  width: 110px; height: 110px;
+  z-index: 5;
+}
+
+.card-name {
+  top: 380px; right: 155px;
+  font-size: 24px;
+  letter-spacing: 2px;
+  color: var(--ink-dark);
+  text-align: right;
+  z-index: 3;
+  white-space: nowrap;
+}
+.card-sub {
+  top: 462px; right: 25px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--ink-mid);
+  text-align: right;
+  z-index: 3;
+  white-space: nowrap;
+}
+
+.footer-title {
+  bottom: 42px; left: 50%; transform: translateX(-50%);
+  font-size: 14px; letter-spacing: 6px; color: #333; white-space: nowrap;
+}
 
 /* ==================================================
    ★ 第2页 · 图三
@@ -315,34 +334,20 @@ html, body {
 .p4-side { top: 545px; right: 30px; width: 200px; height: 150px; border: none; }
 
 /* ==================================================
-   ★ 第5页 · 白底 · 图片 3/4（上方 + 左下） + 右下文字框
-   画布 600×800
-   ┌──────────────────────┐
-   │                      │
-   │      上方图           │  600×400
-   │                      │
-   ├────────────┬─────────┤
-   │            │         │
-   │  左下图    │ 文字框   │  300×400 / 300×400
-   │            │         │
-   └────────────┴─────────┘
+   ★ 第5页 · 图片 3/4 + 右下文字框
    ================================================== */
-
-/* 上方整条图：占画布宽 600，高 400 */
 .p5-img-top {
   top: 0; left: 0;
   width: 600px; height: 400px;
   border: none;
   border-radius: 0;
 }
-/* 左下图片：300 × 400 */
 .p5-img-left {
   top: 400px; left: 0;
   width: 300px; height: 400px;
   border: none;
   border-radius: 0;
 }
-/* 右下文字框：放在右下 300×400 区域里，居中并避开底部翻页按钮 */
 .p5-textbox {
   top: 455px; left: 330px;
   width: 240px; height: 230px;
@@ -358,22 +363,10 @@ html, body {
     0 1px 2px rgba(92,10,26,0.04),
     0 6px 18px rgba(92,10,26,0.08);
 }
-.p5-textbox:hover,
-.p5-textbox:focus { border-color: var(--ink-mid); }
 
 /* ==================================================
-   ★ 第6页 · 白底 · 三图错落 + 四链接 + 右下文字框
-   画布 600×800
-   ┌─────────────┬──────────────┐
-   │  图1（左上） │ 链接1+2（右上）│
-   ├─────────────┼──────────────┤
-   │ 链接3+4（左中）│  图2（右中）   │
-   ├─────────────┼──────────────┤
-   │  图3（左下） │ 文字框（右下）  │
-   └─────────────┴──────────────┘
+   ★ 第6页 · 三图错落 + 四链接 + 右下文字框
    ================================================== */
-
-/* --- 左上图 --- */
 .p6-img1 {
   top: 50px; left: 40px;
   width: 240px; height: 180px;
@@ -382,15 +375,12 @@ html, body {
   box-shadow: 0 6px 20px rgba(0,0,0,0.08);
 }
 
-/* --- 右上：链接 1、2 --- */
 .p6-links-tr {
   top: 50px; right: 40px;
   width: 240px;
   display: flex; flex-direction: column; gap: 12px;
   z-index: 3;
 }
-
-/* --- 左中：链接 3、4 --- */
 .p6-links-ml {
   top: 280px; left: 40px;
   width: 240px;
@@ -398,7 +388,6 @@ html, body {
   z-index: 3;
 }
 
-/* --- 右中图 --- */
 .p6-img2 {
   top: 285px; right: 40px;
   width: 240px; height: 180px;
@@ -407,7 +396,6 @@ html, body {
   box-shadow: 0 6px 20px rgba(0,0,0,0.08);
 }
 
-/* --- 左下图 --- */
 .p6-img3 {
   top: 510px; left: 40px;
   width: 240px; height: 180px;
@@ -416,7 +404,6 @@ html, body {
   box-shadow: 0 6px 20px rgba(0,0,0,0.08);
 }
 
-/* --- 右下：可编辑文字框 --- */
 .p6-textbox {
   top: 510px; right: 40px;
   width: 240px; height: 180px;
@@ -432,18 +419,15 @@ html, body {
     0 1px 2px rgba(92,10,26,0.04),
     0 6px 18px rgba(92,10,26,0.08);
 }
-.p6-textbox:hover,
-.p6-textbox:focus { border-color: var(--ink-mid); }
 
-/* --- 链接通用样式 --- */
 .link-block { display: flex; flex-direction: column; gap: 3px; }
 .link-label {
-  font-size: 11px; padding: 3px 6px;
-  border: none; border-bottom: 1px dashed rgba(92,10,26,0.2);
-  background: transparent; color: var(--ink-mid);
-  outline: none; font-family: inherit; letter-spacing: 1px;
+  font-size: 11px;
+  color: var(--ink-mid);
+  letter-spacing: 1px;
+  padding: 3px 6px;
+  border-bottom: 1px dashed rgba(92,10,26,0.2);
 }
-.link-label:focus { border-color: var(--ink-mid); }
 .link-card {
   display: block; padding: 10px 14px;
   background: linear-gradient(135deg, rgba(92,10,26,0.06), rgba(255,255,255,0.95));
